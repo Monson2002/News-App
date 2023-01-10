@@ -1,8 +1,22 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
+import PropTypes from 'prop-types';
 
 export default class News extends Component {
+
+    static defaultProps = {
+        country: "in",
+        category: "general",
+        newsTitle: "Today's Top News",
+
+    }
+
+    static propTypes = {
+        country: PropTypes.string,
+        category: PropTypes.string,
+        newsTitle: PropTypes.string,
+    }
 
     constructor() {
         super();
@@ -15,7 +29,7 @@ export default class News extends Component {
     }
 
     async componentDidMount() {
-        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=1`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=1`;
 
         this.setState({
             loading: true,
@@ -23,7 +37,7 @@ export default class News extends Component {
 
         fetch(url).then((res) => {
             res.json().then((result) => {
-                this.setState({ 
+                this.setState({
                     articles: result.articles,
                     totalResults: result.totalResults,
                     loading: false,
@@ -33,7 +47,7 @@ export default class News extends Component {
     }
 
     handlePreviousPage = async () => {
-        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
 
         this.setState({
             loading: true,
@@ -41,9 +55,9 @@ export default class News extends Component {
 
         fetch(url).then((res) => {
             res.json().then((result) => {
-                this.setState({ 
-                    articles: result.articles, 
-                    page: this.state.page - 1, 
+                this.setState({
+                    articles: result.articles,
+                    page: this.state.page - 1,
                     totalResults: result.totalResults,
                     loading: false,
                 })
@@ -52,7 +66,7 @@ export default class News extends Component {
     }
 
     handleNextPage = async () => {
-        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
 
         this.setState({
             loading: true,
@@ -60,9 +74,9 @@ export default class News extends Component {
 
         fetch(url).then((res) => {
             res.json().then((result) => {
-                this.setState({ 
-                    articles: result.articles, 
-                    page: this.state.page + 1, 
+                this.setState({
+                    articles: result.articles,
+                    page: this.state.page + 1,
                     totalResults: result.totalResults,
                     loading: false,
                 })
@@ -73,11 +87,11 @@ export default class News extends Component {
     render() {
         return (
             <div className='w-full m-auto sm:w-3/4'>
-                <div className='text-center m-4 text-2xl sm:text-3xl lg:text-4xl font-medium font-newsHead'>
-                    Today's Top News
+                <div className='text-center m-4 mb-8 text-2xl sm:text-3xl lg:text-4xl font-medium font-newsHead'>
+                    {this.props.newsTitle}
                 </div>
                 <div>
-                    {this.state.loading && <Spinner/>}
+                    {this.state.loading && <Spinner />}
                 </div>
                 <div className=''>
                     <div className='row grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
@@ -97,7 +111,7 @@ export default class News extends Component {
                         <button disabled={this.state.page <= 1} onClick={this.handlePreviousPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:bg-gray-100 font-bold py-2 px-4 rounded-l">
                             &#8592; Prev
                         </button>
-                        <button disabled={!this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize)} onClick={this.handleNextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:bg-gray-100 font-bold py-2 px-4 rounded-r">
+                        <button disabled={!this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} onClick={this.handleNextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:bg-gray-100 font-bold py-2 px-4 rounded-r">
                             Next &#8594;
                         </button>
                     </div>
