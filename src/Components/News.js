@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
+import Spinner from './Spinner';
 
 export default class News extends Component {
 
     constructor() {
         super();
         this.state = {
+            totalResults: this.totalResults,
             articles: [],
             loading: false,
             page: 1,
@@ -13,12 +15,17 @@ export default class News extends Component {
     }
 
     async componentDidMount() {
-        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=21&page=1`;
+        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=1`;
+
+        this.setState({
+            loading: true,
+        })
 
         fetch(url).then((res) => {
             res.json().then((result) => {
                 this.setState({ 
                     articles: result.articles,
+                    totalResults: result.totalResults,
                     loading: false,
                 })
             })
@@ -26,14 +33,18 @@ export default class News extends Component {
     }
 
     handlePreviousPage = async () => {
-        console.log("Previous");
-        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=21&page=${this.state.page - 1}`;
+        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
+
+        this.setState({
+            loading: true,
+        })
 
         fetch(url).then((res) => {
             res.json().then((result) => {
                 this.setState({ 
                     articles: result.articles, 
                     page: this.state.page - 1, 
+                    totalResults: result.totalResults,
                     loading: false,
                 })
             })
@@ -41,14 +52,18 @@ export default class News extends Component {
     }
 
     handleNextPage = async () => {
-        console.log("Next");
-        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=21&page=${this.state.page + 1}`;
+        let url = `https://newsapi.org/v2/everything?q=%22india%22&apiKey=609f81c798b744568fb763a01ea621fe&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
+
+        this.setState({
+            loading: true,
+        })
 
         fetch(url).then((res) => {
             res.json().then((result) => {
                 this.setState({ 
                     articles: result.articles, 
                     page: this.state.page + 1, 
+                    totalResults: result.totalResults,
                     loading: false,
                 })
             })
@@ -61,9 +76,12 @@ export default class News extends Component {
                 <div className='text-center m-4 text-2xl sm:text-3xl lg:text-4xl font-medium font-newsHead'>
                     Today's Top News
                 </div>
+                <div>
+                    {this.state.loading && <Spinner/>}
+                </div>
                 <div className=''>
                     <div className='row grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
-                        {this.state.articles.map((element) => {
+                        {!this.state.loading && this.state.articles.map((element) => {
                             return (
                                 <>
                                     <div className='hover:scale-105 transition-all'>
@@ -79,7 +97,7 @@ export default class News extends Component {
                         <button disabled={this.state.page <= 1} onClick={this.handlePreviousPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:bg-gray-100 font-bold py-2 px-4 rounded-l">
                             &#8592; Prev
                         </button>
-                        <button disabled={this.state.page >= 4} onClick={this.handleNextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:bg-gray-100 font-bold py-2 px-4 rounded-r">
+                        <button disabled={!this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize)} onClick={this.handleNextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:bg-gray-100 font-bold py-2 px-4 rounded-r">
                             Next &#8594;
                         </button>
                     </div>
