@@ -11,9 +11,8 @@ export default class App extends Component {
   render() {
     return (
       <>
-        
         <BrowserRouter>
-        <Navbar />
+          <Navbar />
           <Routes>
             <Route path="/" element={<News key="general" pageSize={6} country="in" category="general" newsTitle="Today's Top News" />} />
             <Route path="/business" element={<News key="business" pageSize={6} country="in" category="business" newsTitle="Today's Business News" />} />

@@ -9,7 +9,6 @@ export default class News extends Component {
         country: "in",
         category: "general",
         newsTitle: "Today's Top News",
-
     }
 
     static propTypes = {
@@ -100,7 +99,7 @@ export default class News extends Component {
                                 <>
                                     <div className='hover:scale-105 transition-all'>
 
-                                        <NewsItem key={element.publishedAt} title={element.title ? element.title : ""} description={element.description ? element.description : ""} urlToImage={element.urlToImage ? element.urlToImage : "https://res.cloudinary.com/teepublic/image/private/s--79EwJk3z--/t_Preview/b_rgb:000000,c_limit,f_auto,h_630,q_90,w_630/v1608236443/production/designs/17519845_0.jpg"} url={element.url} />
+                                        <NewsItem key={element.publishedAt} title={element.title ? element.title : ""} description={element.description ? element.description : ""} urlToImage={element.urlToImage ? element.urlToImage : "https://res.cloudinary.com/teepublic/image/private/s--79EwJk3z--/t_Preview/b_rgb:000000,c_limit,f_auto,h_630,q_90,w_630/v1608236443/production/designs/17519845_0.jpg"} url={element.url} source={element.source} time={element.publishedAt} />
 
                                     </div>
                                 </>

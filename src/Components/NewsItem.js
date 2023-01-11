@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class NewsItem extends Component {
 
     render() {
-        let { title, description, urlToImage, url } = this.props;
+        let { title, description, urlToImage, url , source, time} = this.props;
         return (
             <div className='m-2'>
                 <div className="m-4 max-w-sm rounded overflow-hidden shadow-lg">
@@ -12,6 +12,9 @@ export default class NewsItem extends Component {
                         <div className="font-bold text-base sm:text-lg mb-2">{title}</div>
                         <p className="text-gray-700 text-sm sm:text-base">
                             {description}...
+                        </p>
+                        <p className="pt-4 text-gray-500 text-sm">
+                            By {source.name ? source.name : "Unknown"} at {new Date(time).toUTCString()}
                         </p>
                         <div className='p-4'>
                             <a href={url} target="_blank" rel="noreferrer" className="flex justify-center items-center">
