@@ -5,7 +5,7 @@ export class Navbar extends Component {
 
     render() {
         return (
-            <div>
+            <div className='sticky w-full h-full top-0 z-10'>
                 <nav className="bg-gray-800">
                     <div className="mx-auto px-2 sm:px-6 lg:px-8">
                         <div className="relative flex h-16 items-center justify-between">
