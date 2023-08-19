@@ -18,16 +18,15 @@ export class Navbar extends Component {
                                     </svg>
                                 </button>
                             </div>
-                            <div className="absolute flex items-center md:justify-between w-full sm:items-stretch sm:justify-start">
-                                <div className="flex flex-shrink-0 items-center sm:p-4">
+                            <div className="absolute flex justify-center items-center md:justify-between w-full sm:items-stretch sm:justify-start">
+                                {/* <div className="flex flex-shrink-0 items-center sm:p-4">
                                     <img className="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
                                     <img className="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
-                                </div>
+                                </div> */}
 
-                                <div className="relative flex npm run startjustify-center items-center md:space-x-4 sm:p-4">
+                                <div className="relative flex items-center md:space-x-4 sm:p-4">
                                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                                     <div className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:text-slate-200 hover:underline" aria-current="page"><Link to="/">NEWS App</Link></div>
-
                                     <div className="nav-items text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:text-slate-200 hover:underline"><Link to="/business">Business</Link></div>
                                     <div className="nav-items text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:text-slate-200 hover:underline"><Link to="/entertainment">Entertainment</Link></div>
                                     <div className="nav-items text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:text-slate-200 hover:underline"><Link to="/health">Health</Link></div>
